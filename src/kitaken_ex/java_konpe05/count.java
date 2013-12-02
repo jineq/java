@@ -1,4 +1,4 @@
-package kitaken_ex.java_konpe03;
+package kitaken_ex.java_konpe05;
 
 public class count {
 	public static void main(String[] args){
