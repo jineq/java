@@ -11,7 +11,7 @@ public class MoneyLabel extends JPanel {
 	
 	public MoneyLabel() {
 		super();
-		new MoneyLabel(10000,new Color(30, 30, 30),new Color(200,200,200),"お金");
+		new MoneyLabel(10000, new Color(30, 30, 30), new Color(200,200,200),"お金");
 	}
 	
 	public MoneyLabel(int money,Color bgcolor,Color textColor,String message) {
@@ -38,14 +38,14 @@ public class MoneyLabel extends JPanel {
 	}
 	
 	public void clearMoney() {
-		this.money=0;
+		this.money = 0;
 		this.textLabel.drawMessage(0);
 	}
 	
 	class TextLabel extends JLabel {
 		private String message;
 		
-		public TextLabel(Color textColor,String message) {
+		public TextLabel(Color textColor, String message) {
 			super();
 			this.message = message;
 			this.setText(message);
@@ -53,7 +53,7 @@ public class MoneyLabel extends JPanel {
 		}
 		
 		public void drawMessage(int money) {
-			this.setText(this.message+" : "+money);
+			this.setText(this.message + " : " + money);
 		}
 	}
 }

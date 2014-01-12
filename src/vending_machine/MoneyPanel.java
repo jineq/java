@@ -17,7 +17,7 @@ public class MoneyPanel extends JPanel{
 	}
 	
 	private void createComponents(ActionListener moneyUpdate, ActionListener changeButton) {
-		this.status = new MoneyStatus("財布のお金", "入金したお金");
+		this.status   = new MoneyStatus("財布のお金", "入金したお金");
 		this.inputSet = new InputSet(moneyUpdate, changeButton);
 	}
 	
@@ -47,7 +47,7 @@ public class MoneyPanel extends JPanel{
 	}
 	
 	private void makeLayout() {
-		GridLayout layout = new GridLayout(2,2);
+		GridLayout layout = new GridLayout(2, 2);
 		layout.setHgap(20);
 		layout.setVgap(20);
 		this.setLayout(layout);

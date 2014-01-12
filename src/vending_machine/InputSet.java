@@ -6,8 +6,8 @@ public class InputSet {
 	private InputMoneyPanel inPanel;
 	private ChangeButton changeButton;	
 	
-	public InputSet(ActionListener moneyUpdate , ActionListener changeButton) {
-		this.inPanel = new InputMoneyPanel();
+	public InputSet(ActionListener moneyUpdate, ActionListener changeButton) {
+		this.inPanel      = new InputMoneyPanel();
 		this.changeButton = new ChangeButton();
 		this.inPanel.addActionListener(moneyUpdate);
 		this.changeButton.addActionListener(changeButton);

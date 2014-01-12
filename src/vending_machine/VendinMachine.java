@@ -29,13 +29,17 @@ public class VendinMachine extends JFrame {
 	}
 	
 	private void createTop() {
-		String[] nameList = {"りんごジュース","玉子ジュース","hogeジュース","kanpeジュース","jineqジュース","bananaジュース"};
-		ArrayList<String> pakedStrings = new ArrayList<String>(Arrays.asList(nameList));
-		Integer[] costList = {100,200,300,300,300,300};
-		ArrayList<Integer> pakedIntegers = new ArrayList<Integer>(Arrays.asList(costList));
-		this.productPanel = new ProductPanel(pakedStrings,pakedIntegers);
+		String[]  nameArray = {"りんごジュース", "玉子ジュース", "hogeジュース", "kanpeジュース", "jineqジュース", "bananaジュース"};
+		Integer[] costArray = {100, 200, 300, 300, 300, 300};
+		
+		ArrayList<Product> productList = new ArrayList<Product>();
+		for (int i = 0; i < nameArray.length; i++) {
+			Product product = new Product(costArray[i], nameArray[i]);
+			productList.add(product);
+		}
+		this.productPanel = new ProductPanel(productList);
 		this.productPanel.addFuction(new ProduceButtonPushed());
-		this.add(this.productPanel , BorderLayout.NORTH);
+		this.add(this.productPanel, BorderLayout.NORTH);
 	}
 	
 	private void createMiddle() {
@@ -44,9 +48,9 @@ public class VendinMachine extends JFrame {
 	}
 	
 	private void createBottom() {
-		this.result = new Result();
+		this.     result = new Result();
 		JScrollPane pane = new JScrollPane(this.result);
-		this.add(pane , BorderLayout.SOUTH);
+		this.add(pane, BorderLayout.SOUTH);
 	}
 	
 	class MoneyUpdate implements ActionListener {
@@ -58,27 +62,28 @@ public class VendinMachine extends JFrame {
 		}
 		
 		private void updateMoney(int money) {
-			if (moneyPanel.pocketMoney() < money) {
-				moneyPanel.lackMoney();
-				result.append("\nお金が足りっていません");
+			if (money <= moneyPanel.pocketMoney()) {
+				this.addMoney(money);
 				return;
-			} 
-			this.addMoney(money);
+			}
+			moneyPanel.lackMoney();
+			result.append("\nお金が足りっていません");
 		}
 		
 		private void addMoney(int money) {
 			moneyPanel.insertMoney(money);
-			if (0 < money){
-				String resultMessageString = "\n " + money + "円のお金を入れました 現在、入金したお金は　:" + moneyPanel.pocketMoney();
-				result.append(resultMessageString);
+			if (money < 0){
+				return;
 			}
+			String resultMessageString = "\n " + money + "円のお金を入れました 現在、入金したお金は　:" + moneyPanel.amountMoney();
+			result.append(resultMessageString);
 		}
 	}
 	
 	class ChangeEvent implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			result.append("\n "+moneyPanel.amountMoney()+"円のお釣りを取りました");
+			result.append("\n " + moneyPanel.amountMoney() + "円のお釣りを取りました");
 			moneyPanel.changePushed();
 			productPanel.detectEnable(0);
 		}
@@ -87,11 +92,11 @@ public class VendinMachine extends JFrame {
 	class ProduceButtonPushed implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			String string = e.getActionCommand();
+			String    string = e.getActionCommand();
 			String[] command = string.split(",");
-			int money = Integer.parseInt(command[1]);
+			int        money = Integer.parseInt(command[1]);
 			moneyPanel.boughtProduct(money);
-			result.append("\n"+command[0]+"  を買いました 　値段は : "+command[1]+"円です");
+			result.append("\n" + command[0] + " を買いました 値段は : " + command[1] + "円です");
 			productPanel.detectEnable(moneyPanel.amountMoney());
 		}
 	}

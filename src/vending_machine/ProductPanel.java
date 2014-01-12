@@ -3,21 +3,29 @@ package vending_machine;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Iterator;
 import javax.swing.JPanel;
 
 public class ProductPanel extends JPanel {
 	ArrayList<ProductButton> buttons;
 	
-	public ProductPanel(ArrayList<String> produceNames, ArrayList<Integer> cost) {
+	public ProductPanel(ArrayList<Product> produce) {
 		super();
+		this.buttons = new ArrayList<ProductButton>();
 		this.makeLayout();
-		this.creatButtons(produceNames, cost);
+		this.initButtons(produce);
 	}
 	
-	private void creatButtons(ArrayList<String> produceNames,ArrayList<Integer> cost) {
-		this.buttons = new ArrayList<ProductButton>();
-		for (int i = 0; i < produceNames.size(); i++) {
-			this.addButton(new ProductButton(produceNames.get(i), cost.get(i)));
+	private void initButtons(ArrayList<Product> produce) {
+		Iterator<Product> iterator = produce.iterator();
+		while (iterator.hasNext()) {
+			Product product = iterator.next();
+			String  name    = product.getName();
+			int     cost    = product.getCost();
+			
+			ProductButton button  = new ProductButton(name, cost);
+			this.buttons.add(button);
+			this.add(button);
 		}
 	}
 	
@@ -28,21 +36,18 @@ public class ProductPanel extends JPanel {
 		this.setLayout(layout);
 	}
 	
-	public void addButton(ProductButton button) {
-		this.buttons.add(button);
-		this.add(button);
-	}
-	
 	public void detectEnable(int money) {
-		for (int i = 0; i < this.buttons.size(); i++) {
-			ProductButton button = this.buttons.get(i);
+		Iterator<ProductButton> iterator = this.buttons.iterator();
+		while (iterator.hasNext()) {
+			ProductButton button = iterator.next();
 			button.updateStatus(money);
 		}
 	}
 	
 	public void addFuction(ActionListener action) {
-		for (int i = 0; i < this.buttons.size(); i++) {
-			ProductButton button = this.buttons.get(i);
+		Iterator<ProductButton> iterator = this.buttons.iterator();
+		while (iterator.hasNext()) {
+			ProductButton button = iterator.next();
 			button.addActionListener(action);
 		}
 	}

@@ -13,44 +13,38 @@ import javax.swing.JRadioButton;
 public class ProductButton extends JButton{
 	private ProduceDetails details;
 	private JRadioButton enableButton;
-	public ProductButton(String name,int cost) {
+	public ProductButton(String name, int cost) {
 		super();
 		this.setLayout(new BorderLayout());
-		this.makeDetails(cost,name);
+		this.makeDetails(cost, name);
 		this.makeRadiobutton(name);
 		this.setBackground(new Color(0.1f, 0.1f, 0.1f));
-		this.setActionCommand(name+","+cost);
+		this.setActionCommand(name + "," + cost);
 		this.updateStatus(0);
 	}
 	
-	private void makeDetails(int cost,String name) {
+	private void makeDetails(int cost, String name) {
 		this.details = new ProduceDetails(cost, name);
-		this.add(this.details.getLabel() , BorderLayout.NORTH);
+		this.add(this.details.getLabel(), BorderLayout.NORTH);
 	}
 	
 	private void makeRadiobutton(String name) {
-		enableButton = new JRadioButton(""+this.details.cost);
-		enableButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				enableButton.setSelected(details.isEnable());
-			}
-		});
-		this.add(enableButton , BorderLayout.WEST);
+		enableButton = new JRadioButton("" + this.details.cost);
+		enableButton.addActionListener(new radioRester());
+		this.add(enableButton, BorderLayout.WEST);
 	}
 	
 	public void updateStatus(int money) {
 		boolean enable = this.detectEnable(money);
 		this.details.updateEnable(enable) ;
-		this.enableButton.setSelected(this.details.isEnable());
-		this.setEnabled(this.details.isEnable());
+		Boolean detecterBoolean = this.details.isEnable();
+		this.enableButton.setSelected(detecterBoolean);
+		this.setEnabled(detecterBoolean);
 	}
 	
 	private Boolean detectEnable(int money) {
-		if (money < this.details.getCost()) {
-			return false;
-		}
-		return true;
+		Boolean detecter = (this.details.getCost() <= money);
+		return detecter;
 	}
 	
 	class ProduceDetails {
@@ -77,6 +71,12 @@ public class ProductButton extends JButton{
 		
 		public void updateEnable(boolean enable) {
 			this.isEnable = enable;
+		}
+	}
+	
+	class radioRester implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			enableButton.setSelected(details.isEnable());
 		}
 	}
 }
