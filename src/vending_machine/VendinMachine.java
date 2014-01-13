@@ -47,7 +47,8 @@ public class VendinMachine extends JFrame {
 	}
 	
 	private void createBottom() {
-		this.     result = new Result();
+		this.result = new Result();
+		
 		JScrollPane pane = new JScrollPane(this.result);
 		this.add(pane, BorderLayout.SOUTH);
 	}
